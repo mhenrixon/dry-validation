@@ -65,7 +65,7 @@ module Dry
         end
 
         def call(predicate, options = EMPTY_HASH)
-          cache.fetch_or_store([predicate, options.reject { |k,| k.equal?(:input) }]) do
+          cache.fetch_or_store([predicate, options.select { |k,| !k.equal?(:input) }]) do
             path, opts = lookup(predicate, options)
             return unless path
             text = yield(path, opts)
